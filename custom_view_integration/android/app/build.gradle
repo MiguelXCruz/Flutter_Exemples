@@ -53,8 +53,9 @@ android {
         }
     }
 
-     //ADD opções abaixo no projto nativo
-    dataBinding.enabled = true
+    buildFeatures {
+        dataBinding = true
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -68,6 +69,16 @@ android {
     aaptOptions {
         noCompress "tflite"
     }
+
+    dependencies { 
+        implementation "androidx.camera:camera-view:1.0.0-alpha24"
+        implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+        implementation 'com.combateafraude.sdk:face-authenticator:4.3.0'
+
+
+    }
+
+
 }
 
 flutter {
@@ -76,4 +87,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.android.material:material:1.4.0'
 }

@@ -15,6 +15,7 @@ import 'package:document_detector/document_detector.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:passive_face_liveness/android/customization.dart';
 
 import 'package:passive_face_liveness/android/settings.dart';
 import 'package:passive_face_liveness/show_preview.dart';
@@ -67,6 +68,14 @@ class _MyAppState extends State<MyApp> {
     DocumentDetector documentDetector =
         new DocumentDetector(mobileToken: mobileToken);
 
+    DocumentDetectorCustomizationAndroid customDocAndroid =
+        new DocumentDetectorCustomizationAndroid(
+            whiteMaskResIdName: "document_whitemask",
+            greenMaskResIdName: "document_greenmask",
+            redMaskResIdName: "document_redmask");
+
+    DocumentDetectorAndroidSettings androidSettings =
+        new DocumentDetectorAndroidSettings(customization: customDocAndroid);
     //Custom showPreview
     ShowPreviewDoc.ShowPreview showPreview = new ShowPreviewDoc.ShowPreview(
         show: true,
@@ -159,7 +168,6 @@ class _MyAppState extends State<MyApp> {
 
     //Custom messageSettings
     MessageSettings messageSettings = new MessageSettings(
-      stepName: "Registro facial",
       faceNotFoundMessage: "Não encontramos um rosto em nossa base de dados",
       faceTooFarMessage: "Aproxima o teu rosto",
       faceTooCloseMessage: "Afasta o teu rosto",
@@ -168,10 +176,17 @@ class _MyAppState extends State<MyApp> {
       holdItMessage: "Segure seu dispositivo desse jeito",
     );
 
-    //Custom ButtonTime
+    PassiveFaceLivenessCustomizationAndroid costumizationAndroid =
+        new PassiveFaceLivenessCustomizationAndroid(
+            whiteMaskResIdName: "face_whitemask",
+            greenMaskResIdName: "face_greenmask",
+            redMaskResIdName: "face_redmask");
+
+    //Custom ButtonTime and Layout
     PassiveFaceLivenessAndroidSettings passiveFaceLivenessAndroidSettings =
-        new PassiveFaceLivenessAndroidSettings(showButtonTime: 25000);
-    //The button time is defined on Milliseconds. ex: 25000 -> 25seg
+        new PassiveFaceLivenessAndroidSettings(
+            showButtonTime: 25000, customization: costumizationAndroid);
+    //The button time is defined on Milliseconds. ex: 25000 --> 25seg
 
     passiveFaceLiveness.setShowPreview(showPreview);
 
@@ -268,7 +283,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              title: const Text('DocumentDetector plugin example'),
+              title: const Text('Flutter plugin example'),
             ),
             body: Container(
                 margin: const EdgeInsets.all(20.0),
@@ -286,7 +301,7 @@ class _MyAppState extends State<MyApp> {
                             ]);
                           },
                           icon: Icon(Icons.document_scanner),
-                          label: Text('Start DocumentDetector for CNH'),
+                          label: Text('DocumentDetector for CNH'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               onPrimary: Colors.greenAccent,
@@ -313,7 +328,7 @@ class _MyAppState extends State<MyApp> {
                             ]);
                           },
                           icon: Icon(Icons.document_scanner),
-                          label: Text('Start DocumentDetector for RG'),
+                          label: Text('DocumentDetector for RG'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               onPrimary: Colors.greenAccent,
@@ -340,7 +355,7 @@ class _MyAppState extends State<MyApp> {
                             ]);
                           },
                           icon: Icon(Icons.document_scanner),
-                          label: Text('Start DocumentDetector for RNE'),
+                          label: Text('DocumentDetector for RNE'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               onPrimary: Colors.greenAccent,
@@ -362,7 +377,7 @@ class _MyAppState extends State<MyApp> {
                             startPassiveFaceLiveness();
                           },
                           icon: Icon(Icons.person),
-                          label: Text('Start Passive Face Liveness'),
+                          label: Text('Passive Face Liveness'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               onPrimary: Colors.greenAccent,
@@ -384,7 +399,7 @@ class _MyAppState extends State<MyApp> {
                             startFaceAuthenticator();
                           },
                           icon: Icon(Icons.person),
-                          label: Text('Start Face Authenticator'),
+                          label: Text('Face Authenticator'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               onPrimary: Colors.greenAccent,
